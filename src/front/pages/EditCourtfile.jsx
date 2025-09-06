@@ -6,8 +6,9 @@ export const EditCourtfile = () => {
   const { store, dispatch } = useGlobalReducer();
   const { courtfileId } = useParams();
   const navigate = useNavigate();
-  
-  // Lista de provincias directamente en el componente
+
+  const API = import.meta.env.VITE_BACKEND_URL;
+
   const PROVINCIAS_ARGENTINAS = [
     'Buenos Aires', 'Catamarca', 'Chaco', 'Chubut', 'Córdoba',
     'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 'La Pampa',
@@ -15,7 +16,7 @@ export const EditCourtfile = () => {
     'Salta', 'San Juan', 'San Luis', 'Santa Cruz', 'Santa Fe',
     'Santiago del Estero', 'Tierra del Fuego', 'Tucumán', 'CABA'
   ];
-  
+
   const [formData, setFormData] = useState({
     case_number: '',
     title: '',
@@ -24,7 +25,7 @@ export const EditCourtfile = () => {
     court: '',
     status: true
   });
-  
+
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState(null);
@@ -34,14 +35,13 @@ export const EditCourtfile = () => {
     const fetchCourtfile = async () => {
       try {
         setFetching(true);
-        const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
-        
-        const response = await fetch(`${backendUrl}/api/courtfiles/${courtfileId}`);
-        
+
+        const response = await fetch(`${API}/api/courtfiles/${courtfileId}`);
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
         setFormData(data);
         setError(null);
@@ -61,16 +61,16 @@ export const EditCourtfile = () => {
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === 'checkbox') {
-    setFormData(prev => ({
-      ...prev,
-      [name]: checked  
-    }));
-  } else {
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  }
+      setFormData(prev => ({
+        ...prev,
+        [name]: checked
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -79,9 +79,8 @@ export const EditCourtfile = () => {
     setError(null);
 
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
-      
-      const response = await fetch(`${backendUrl}/api/courtfiles/${courtfileId}`, {
+
+      const response = await fetch(`${API}/api/courtfiles/${courtfileId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -91,16 +90,16 @@ export const EditCourtfile = () => {
 
       if (response.ok) {
         const updatedCourtfile = await response.json();
-        
+
         // Actualizar en el estado global
-        dispatch({ 
-          type: 'UPDATE_COURTFILE', 
-          payload: updatedCourtfile 
+        dispatch({
+          type: 'UPDATE_COURTFILE',
+          payload: updatedCourtfile
         });
-        
+
         // Redirigir a la lista de courtfiles
         navigate('/courtfiles');
-        
+
         alert('Courtfile updated successfully!');
       } else {
         const errorData = await response.json();
@@ -271,11 +270,11 @@ export const EditCourtfile = () => {
 
                 {/* Buttons */}
                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <Link to="/courtfiles" className="btn btn-secondary me-md-2">
+                  <Link to={`/courtfiles/view/${courtfileId}`} className="btn btn-secondary me-md-2">
                     Cancel
                   </Link>
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="btn btn-primary"
                     disabled={loading}
                   >

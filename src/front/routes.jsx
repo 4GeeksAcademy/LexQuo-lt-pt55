@@ -14,6 +14,7 @@ import { Lawyers } from "./pages/Lawyers";
 import { Admin } from "./pages/Admin";
 import { EditCourtfile } from "./pages/EditCourtfile";
 import { AddCourtfile } from "./pages/AddCourtfile";
+import { ViewCourtfile } from "./pages/ViewCourtfile";
 
 
 export const router = createBrowserRouter(
@@ -32,6 +33,7 @@ export const router = createBrowserRouter(
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
         <Route path="/demo" element={<Demo />} />
         <Route path="/courtfiles" element={<Courtfiles />} />
+        <Route path="/courtfiles/view/:courtfileId" element={<ViewCourtfile />} />
         <Route path="/courtfiles/addcourtfile" element={<AddCourtfile />} />    
         <Route path="/courtfiles/:courtfileId" element={<EditCourtfile />} />  
         <Route path="/lawyers" element={<Lawyers />} />

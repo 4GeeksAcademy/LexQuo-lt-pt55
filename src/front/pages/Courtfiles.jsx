@@ -99,7 +99,7 @@ export const Courtfiles = () => {
                                     </td>
                                     <td>
                                         <Link
-                                            to={`/courtfiles/${courtfile.id}`}
+                                            to={`/courtfiles/view/${courtfile.id}`}
                                             className="btn btn-sm btn-info me-1"
                                             title="View details"
                                         >
