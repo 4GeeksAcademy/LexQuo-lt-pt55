@@ -9,6 +9,12 @@ import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
+import { Courtfiles } from "./pages/Courtfiles";
+import { Lawyers } from "./pages/Lawyers";
+import { Admin } from "./pages/Admin";
+import { EditCourtfile } from "./pages/EditCourtfile";
+import { AddCourtfile } from "./pages/AddCourtfile";
+
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -25,6 +31,11 @@ export const router = createBrowserRouter(
         <Route path= "/" element={<Home />} />
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
         <Route path="/demo" element={<Demo />} />
+        <Route path="/courtfiles" element={<Courtfiles />} />
+        <Route path="/courtfiles/addcourtfile" element={<AddCourtfile />} />    
+        <Route path="/courtfiles/:courtfileId" element={<EditCourtfile />} />  
+        <Route path="/lawyers" element={<Lawyers />} />
+        <Route path="/admin" element={<Admin />} />
       </Route>
     )
 );
